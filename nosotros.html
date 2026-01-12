@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - GradMemories</title>
+
+    <!-- TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- NAVBAR CSS PRO -->
+    <link rel="stylesheet" href="./css/navbar.css">
+
+    <!-- STYLES (principal) -->
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- AOS para animaciones scroll -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+
+<body class="bg-[#0f1221] text-white">
+
+    <!-- NAVBAR ( versión PRO + Tailwind compatible ) -->
+    <header class="navbar">
+        <div class="nav-logo">GradMemories</div>
+
+        <!-- Desktop links -->
+        <nav class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="eventos.html">Eventos</a>
+            <a href="nosotros.html" class="active">Nosotros</a>
+            <a href="contacto.html">Contacto</a>
+        </nav>
+
+        <!-- Acciones (login + carrito) -->
+        <div class="nav-actions">
+            <button class="btn-login">Iniciar sesión</button>
+            <button class="btn-cart" aria-label="Carrito de compras">
+                <img src="icons/cart.svg" alt="Carrito">
+                <span class="cart-count" aria-hidden="true">0</span>
+            </button>
+        </div>
+
+        <!-- Hamburguesa -->
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- MENÚ MÓVIL -->
+    <nav class="mobile-menu">
+        <div class="mobile-actions">
+            <a href="#" class="btn-login">Iniciar sesión</a>
+            <a href="#" class="btn-cart"><img src="icons/cart.svg" alt="Carrito"></a>
+        </div>
+
+        <a href="index.html">Inicio</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="nosotros.html" class="active">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+    </nav>
+
+    <!-- SOBRE NOSOTROS HERO -->
+    <section class="px-16 py-32 text-center">
+
+        <h1 class="text-4xl font-bold text-purple-300 mb-6" data-aos="fade-up">
+            Sobre Nosotros
+        </h1>
+
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+            Preservando los mejores momentos de tu graduación con profesionalismo y pasión
+        </p>
+
+    </section>
+
+    <!-- DESCRIPCIÓN PRINCIPAL -->
+    <section class="px-16 py-20 max-w-4xl mx-auto">
+
+        <div class="space-y-6 text-gray-300 text-lg leading-relaxed" data-aos="fade-up">
+
+            <p>
+                GradMemories es la plataforma líder en Argentina para compartir y preservar los recuerdos más especiales de tu 
+                baile de egresados. Nos comprometemos a brindarte el mejor servicio posible, con atención personalizada y 
+                soporte técnico disponible 24/7. Tu satisfacción es nuestra prioridad.
+            </p>
+
+            <p>
+                Trabajamos con fotógrafos profesionales y videógrafos en todo el país para capturar cada momento mágico de 
+                tu noche especial. Nuestra misión es hacer que estos recuerdos sean fácilmente accesibles y compartibles para 
+                todos los estudiantes y sus familias.
+            </p>
+
+            <p>
+                Con tecnología de última generación y un equipo dedicado, garantizamos la mejor calidad en cada foto y video 
+                que compartimos. Cada imagen es procesada con cuidado para capturar la esencia y la emoción de tu evento.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- CARACTERÍSTICAS / VENTAJAS -->
+    <section class="px-16 py-20">
+
+        <div class="grid grid-cols-2 gap-8 max-w-5xl mx-auto">
+
+            <!-- Tarjeta 1 -->
+            <div class="bg-[#161a30] p-8 rounded-xl border border-gray-800" data-aos="fade-up">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 bg-opacity-20">
+                            <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-purple-400">Calidad Profesional</h3>
+                        <p class="mt-2 text-gray-400">
+                            Fotógrafos y videógrafos certificados con equipamiento de última generación para capturar cada momento perfecto.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="bg-[#161a30] p-8 rounded-xl border border-gray-800" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 bg-opacity-20">
+                            <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-purple-400">Seguridad Garantizada</h3>
+                        <p class="mt-2 text-gray-400">
+                            Tus fotos y videos están protegidos con encriptación de nivel empresarial y acceso controlado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="bg-[#161a30] p-8 rounded-xl border border-gray-800" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 bg-opacity-20">
+                            <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0zM5 20h10a2 2 0 002-2v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-purple-400">Fácil Acceso</h3>
+                        <p class="mt-2 text-gray-400">
+                            Busca tus fotos por nombre, compártelas con amigos y familia, y descarga en alta resolución.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 4 -->
+            <div class="bg-[#161a30] p-8 rounded-xl border border-gray-800" data-aos="fade-up" data-aos-delay="300">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 bg-opacity-20">
+                            <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-purple-400">Recuerdos para Siempre</h3>
+                        <p class="mt-2 text-gray-400">
+                            Almacenamiento ilimitado de tus fotos y videos. Revive tus mejores momentos cuando quieras.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ESTADÍSTICAS -->
+    <section class="px-16 py-20">
+
+        <div class="max-w-4xl mx-auto bg-gradient-to-r from-purple-500 from-10% via-purple-600 via-50% to-indigo-600 to-90% p-12 rounded-xl border border-purple-400 border-opacity-30"
+            data-aos="fade-up">
+            
+            <div class="grid grid-cols-4 gap-8 text-center">
+
+                <div>
+                    <div class="text-4xl font-bold text-white">500+</div>
+                    <p class="text-purple-100 mt-2">Eventos Cubiertos</p>
+                </div>
+
+                <div>
+                    <div class="text-4xl font-bold text-white">50K+</div>
+                    <p class="text-purple-100 mt-2">Estudiantes Felices</p>
+                </div>
+
+                <div>
+                    <div class="text-4xl font-bold text-white">200K+</div>
+                    <p class="text-purple-100 mt-2">Fotos Subidas</p>
+                </div>
+
+                <div>
+                    <div class="text-4xl font-bold text-white">15K+</div>
+                    <p class="text-purple-100 mt-2">Videos Compartidos</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- NUESTRO COMPROMISO -->
+    <section class="px-16 py-20">
+
+        <h2 class="text-center text-2xl font-bold text-purple-300 mb-12" data-aos="fade-up">
+            Nuestro Compromiso
+        </h2>
+
+        <div class="max-w-3xl mx-auto bg-[#161a30] p-10 rounded-xl border border-gray-800 text-center" 
+            data-aos="fade-up">
+            
+            <p class="text-lg text-gray-300 leading-relaxed">
+                En GradMemories, entendemos que el baile de egresados es uno de los momentos más importantes de tu vida. 
+                Por eso, nos comprometemos a brindarte el mejor servicio posible, con atención personalizada y 
+                soporte técnico disponible 24/7. Tu satisfacción es nuestra prioridad.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="px-20 py-16 bg-[#0b0d19] text-center" data-aos="fade-up">
+
+        <h3 class="text-lg text-purple-300 mb-5">Información de Contacto</h3>
+
+        <p class="text-gray-300 mb-10">
+            ¿Tienes preguntas? Estamos aquí para ayudarte a preservar tus mejores recuerdos.
+        </p>
+
+        <div class="grid grid-cols-3 text-gray-300 text-lg">
+
+            <div>
+                <h4 class="font-semibold text-white">Email</h4>
+                contacto@gradmemories.com
+            </div>
+
+            <div>
+                <h4 class="font-semibold text-white">Teléfono</h4>
+                +54 9 502-9031
+            </div>
+
+            <div>
+                <h4 class="font-semibold text-white">Horario</h4>
+                Lun - Vie: 9:00 - 18:00
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- SIDEBAR CARRITO -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-sidebar-header">
+            <h2>Tu Carrito</h2>
+            <button class="close-sidebar" aria-label="Cerrar carrito">✕</button>
+        </div>
+        <div class="cart-sidebar-content" id="cart-sidebar-content">
+            <div class="cart-empty-msg">Tu carrito está vacío</div>
+        </div>
+        <div class="cart-sidebar-footer">
+            <div class="sidebar-total">Total: <span id="sidebar-total">$0</span></div>
+            <a href="carrito.html" class="btn-glow px-4 py-2 rounded text-center">Ir al Carrito</a>
+        </div>
+    </div>
+
+    <!-- OVERLAY (para cerrar sidebar al hacer clic afuera) -->
+    <div class="cart-sidebar-overlay" id="cart-sidebar-overlay"></div>
+
+        <!-- AUTH SCRIPT -->
+    <script src="./js/auth.js"></script>
+    <!-- NAVBAR SCRIPT -->
+    <script src="./js/navbar.js"></script>
+
+    <!-- AOS SCRIPT -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>AOS.init({ duration: 900, once: true });</script>
+
+
+    <!-- AUTH MODAL (LOGIN / SIGNUP) -->
+    <div class="auth-modal-overlay" id="auth-modal-overlay"></div>
+    <div class="auth-modal" id="auth-modal">
+        <!-- Login Form -->
+        <form id="auth-login-form" style="display: block;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Iniciar Sesión</h2>
+                <p class="auth-modal-subtitle">Accede a tu cuenta para comprar</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-login-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Contraseña</label>
+                <input type="password" id="auth-login-password" class="auth-form-input" placeholder="" required>
+            </div>
+            
+            <button type="button" id="auth-login-submit" class="auth-form-submit">Iniciar Sesión</button>
+            
+            <div class="auth-form-link">
+                ¿No tienes cuenta? <a id="switch-to-signup">Regístrate</a><br>
+                <a id="switch-to-forgot">¿Olvidaste tu contraseña?</a>
+            </div>
+        </form>
+
+        <!-- Verify Email Form -->
+        <form id="auth-verify-email-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Verificar Email</h2>
+                <p class="auth-modal-subtitle">Se envió un código a tu email</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Código de Verificación</label>
+                <input type="text" id="auth-verify-email-code" class="auth-form-input" placeholder="0000" maxlength="4" required>
+                <p style="font-size:0.85rem; color:#718096; margin-top:8px; text-align:center;">El código expira en 10 minutos</p>
+            </div>
+            
+            <button type="button" id="auth-verify-email-submit" class="auth-form-submit">Verificar</button>
+            
+            <div class="auth-form-link">
+                ¿No recibiste el código? <a id="resend-verification-code">Reenviar</a>
+            </div>
+        </form>
+
+        <!-- Forgot Password Form -->
+        <form id="auth-forgot-password-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Recuperar Contraseña</h2>
+                <p class="auth-modal-subtitle">Ingresa tu email para recibir un código</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-forgot-password-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <button type="button" id="auth-forgot-password-submit" class="auth-form-submit">Enviar Código</button>
+            
+            <div class="auth-form-link">
+                <a id="forgot-back-to-login"> Volver a iniciar sesión</a>
+            </div>
+        </form>
+
+        <!-- Reset Password Form -->
+        <form id="auth-reset-password-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Nueva Contraseña</h2>
+                <p class="auth-modal-subtitle">Ingresa el código y tu nueva contraseña</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Código de Recuperación</label>
+                <input type="text" id="auth-reset-password-code" class="auth-form-input" placeholder="0000" maxlength="4" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Nueva Contraseña</label>
+                <input type="password" id="auth-reset-password-new" class="auth-form-input" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            
+            <button type="button" id="auth-reset-password-submit" class="auth-form-submit">Actualizar Contraseña</button>
+        </form>
+
+<!-- Signup Form -->
+        <form id="auth-signup-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Crear Cuenta</h2>
+                <p class="auth-modal-subtitle">Crea tu cuenta para compartir tus recuerdos</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Nombre del Alumno</label>
+                <input type="text" id="auth-signup-nombre" class="auth-form-input" placeholder="Tu nombre completo" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Colegio</label>
+                <input type="text" id="auth-signup-colegio" class="auth-form-input" placeholder="Nombre de tu colegio" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-signup-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Contraseña</label>
+                <input type="password" id="auth-signup-password" class="auth-form-input" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            
+            <button type="button" id="auth-signup-submit" class="auth-form-submit">Registrarse</button>
+            
+            <div class="auth-form-link">
+                ¿Ya tienes cuenta? <a id="switch-to-login">Inicia sesión</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+
+
+
+

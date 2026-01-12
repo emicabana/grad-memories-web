@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Carrito — GradMemories</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="bg-[#0f1221] text-white">
+    <header class="navbar">
+        <div class="nav-logo">GradMemories</div>
+        <nav class="nav-links"><a href="index.html">Inicio</a><a href="eventos.html">Eventos</a><a href="nosotros.html">Nosotros</a><a href="contacto.html">Contacto</a></nav>
+        <div class="nav-actions"><button class="btn-login">Iniciar sesión</button><button class="btn-cart" aria-label="Carrito"><img src="icons/cart.svg" alt="Carrito"><span class="cart-count" aria-hidden="true">0</span></button></div>
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </header>
+
+    <main class="px-16 py-12 max-w-6xl mx-auto">
+        <h1 class="text-2xl text-purple-300 font-semibold mb-6">Tu Carrito</h1>
+        <div class="bg-[#161a30] p-6 rounded-xl border border-gray-800 mb-8">
+            <div id="cart-empty" class="text-gray-400" style="display:none;">Tu carrito está vacío.</div>
+            <div id="cart-list" class="space-y-4"></div>
+            <div id="cart-summary" class="mt-6 flex justify-between items-center" style="display:none;">
+                <div class="text-lg text-gray-300">Total: <span id="cart-total" class="text-white font-bold">$0</span></div>
+                <div class="flex gap-3">
+                    <button id="clear-cart" class="btn-outline px-4 py-2 rounded">Vaciar Carrito</button>
+                    <button id="checkout-btn" class="btn-glow px-4 py-2 rounded">Pagar ahora</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./js/navbar.js"></script>
+    <script>
+        (function(){
+            const STORAGE_KEY = 'gradmemories_cart';
+            const cartListEl = document.getElementById('cart-list');
+            const cartEmptyEl = document.getElementById('cart-empty');
+            const cartSummaryEl = document.getElementById('cart-summary');
+            const cartTotalEl = document.getElementById('cart-total');
+            const clearBtn = document.getElementById('clear-cart');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            function loadCart(){ try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : []; } catch(e){ return []; } }
+            function saveCart(cart){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); window.dispatchEvent(new StorageEvent('storage', {key:STORAGE_KEY})); window.dispatchEvent(new Event('cart-updated')); } catch(e){} }
+
+            function render(){
+                const cart = loadCart();
+                cartListEl.innerHTML = '';
+                if(cart.length===0){ cartEmptyEl.style.display='block'; cartSummaryEl.style.display='none'; return; }
+                cartEmptyEl.style.display='none'; cartSummaryEl.style.display='flex';
+                let total = 0;
+                cart.forEach((item, idx)=>{
+                    total += Number(item.price || 0) * (item.qty || 1);
+                    const row = document.createElement('div');
+                    row.className = 'grid grid-cols-12 gap-4 items-center p-3 bg-[#0f1221] rounded-md';
+
+                    const thumb = document.createElement('div'); thumb.className='col-span-3';
+                    const img = document.createElement('img'); img.src = item.thumbnail || 'assets/portada/foto1.jpg'; img.className='w-full h-24 object-cover rounded'; thumb.appendChild(img);
+
+                    const info = document.createElement('div'); info.className='col-span-6';
+                    info.innerHTML = `<div class="font-semibold">${item.title || item.id}</div><div class="text-sm text-gray-400">${item.type || ''}</div>`;
+
+                    const controls = document.createElement('div'); controls.className='col-span-3 text-right';
+                    controls.innerHTML = `
+                        <div class="text-purple-300 font-semibold">$${item.price}</div>
+                        <div class="mt-2 flex justify-end gap-2 items-center">
+                            <button class='qty-minus btn-outline px-2 py-1 rounded' data-idx='${idx}'>-</button>
+                            <div class='px-3'>${item.qty||1}</div>
+                            <button class='qty-plus btn-outline px-2 py-1 rounded' data-idx='${idx}'>+</button>
+                        </div>
+                        <div class='mt-2'><button class='remove-item btn-outline px-3 py-1 rounded text-sm' data-idx='${idx}'>Eliminar</button></div>
+                    `;
+
+                    row.appendChild(thumb); row.appendChild(info); row.appendChild(controls);
+                    cartListEl.appendChild(row);
+                });
+                cartTotalEl.textContent = '$' + total;
+
+                // attach listeners
+                document.querySelectorAll('.remove-item').forEach(btn=> btn.addEventListener('click', (e)=>{
+                    const i = Number(e.target.dataset.idx); const c = loadCart(); c.splice(i,1); saveCart(c); render(); updateNavbarCounter();
+                }));
+
+                document.querySelectorAll('.qty-plus').forEach(btn=> btn.addEventListener('click', (e)=>{
+                    const i = Number(e.target.dataset.idx); const c = loadCart(); c[i].qty = (c[i].qty||1)+1; saveCart(c); render(); updateNavbarCounter();
+                }));
+                document.querySelectorAll('.qty-minus').forEach(btn=> btn.addEventListener('click', (e)=>{
+                    const i = Number(e.target.dataset.idx); const c = loadCart(); c[i].qty = Math.max(1, (c[i].qty||1)-1); saveCart(c); render(); updateNavbarCounter();
+                }));
+            }
+
+            function updateNavbarCounter(){
+                try{ const raw = localStorage.getItem(STORAGE_KEY); const arr = raw ? JSON.parse(raw) : []; const count = arr.length || 0; document.querySelectorAll('.cart-count').forEach(el=>el.textContent = count); }catch(e){}
+            }
+
+            clearBtn.addEventListener('click', ()=>{ if(!confirm('Vaciar carrito?')) return; saveCart([]); render(); updateNavbarCounter(); });
+
+            checkoutBtn.addEventListener('click', async ()=>{
+                if(!requireLogin()) return; // Verificar login
+                const cart = loadCart(); if(cart.length===0){ alert('Carrito vacío'); return; }
+                // Enviar al backend (ejemplo POST)
+                try{
+                    const resp = await fetch('/api/checkout', {
+                        method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({items: cart})
+                    });
+                    if(resp.ok){
+                        const data = await resp.json();
+                        alert('Pago simulado OK — orden: ' + (data.orderId || 'N/A'));
+                        // limpiar carrito
+                        saveCart([]); render(); updateNavbarCounter();
+                    } else {
+                        alert('Error en el pago (simulado).');
+                    }
+                } catch(err){
+                    alert('No se pudo contactar el servidor de pago. (Simulación)');
+                }
+            });
+
+            // init
+            render(); updateNavbarCounter();
+
+        })();
+    </script>
+
+
+    <!-- SIDEBAR CARRITO -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-sidebar-header">
+            <h2>Tu Carrito</h2>
+            <button class="close-sidebar" aria-label="Cerrar carrito"></button>
+        </div>
+        <div class="cart-sidebar-content" id="cart-sidebar-content">
+            <div class="cart-empty-msg">Tu carrito está vacío</div>
+        </div>
+        <div class="cart-sidebar-footer">
+            <div class="sidebar-total">Total: <span id="sidebar-total"></span></div>
+            <a href="carrito.html" class="btn-glow px-4 py-2 rounded text-center">Ir al Carrito</a>
+        </div>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="cart-sidebar-overlay" id="cart-sidebar-overlay"></div>
+    <!-- AUTH MODAL (LOGIN / SIGNUP) -->
+    <div class="auth-modal-overlay" id="auth-modal-overlay"></div>
+    <div class="auth-modal" id="auth-modal">
+        <!-- Login Form -->
+        <form id="auth-login-form" style="display: block;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Iniciar Sesión</h2>
+                <p class="auth-modal-subtitle">Accede a tu cuenta para comprar</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-login-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Contraseña</label>
+                <input type="password" id="auth-login-password" class="auth-form-input" placeholder="" required>
+            </div>
+            
+            <button type="button" id="auth-login-submit" class="auth-form-submit">Iniciar Sesión</button>
+            
+            <div class="auth-form-link">
+                ¿No tienes cuenta? <a id="switch-to-signup">Regístrate</a><br>
+                <a id="switch-to-forgot">¿Olvidaste tu contraseña?</a>
+            </div>
+        </form>
+
+        <!-- Verify Email Form -->
+        <form id="auth-verify-email-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Verificar Email</h2>
+                <p class="auth-modal-subtitle">Se envió un código a tu email</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Código de Verificación</label>
+                <input type="text" id="auth-verify-email-code" class="auth-form-input" placeholder="0000" maxlength="4" required>
+                <p style="font-size:0.85rem; color:#718096; margin-top:8px; text-align:center;">El código expira en 10 minutos</p>
+            </div>
+            
+            <button type="button" id="auth-verify-email-submit" class="auth-form-submit">Verificar</button>
+            
+            <div class="auth-form-link">
+                ¿No recibiste el código? <a id="resend-verification-code">Reenviar</a>
+            </div>
+        </form>
+
+        <!-- Forgot Password Form -->
+        <form id="auth-forgot-password-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Recuperar Contraseña</h2>
+                <p class="auth-modal-subtitle">Ingresa tu email para recibir un código</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-forgot-password-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <button type="button" id="auth-forgot-password-submit" class="auth-form-submit">Enviar Código</button>
+            
+            <div class="auth-form-link">
+                <a id="forgot-back-to-login"> Volver a iniciar sesión</a>
+            </div>
+        </form>
+
+        <!-- Reset Password Form -->
+        <form id="auth-reset-password-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Nueva Contraseña</h2>
+                <p class="auth-modal-subtitle">Ingresa el código y tu nueva contraseña</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Código de Recuperación</label>
+                <input type="text" id="auth-reset-password-code" class="auth-form-input" placeholder="0000" maxlength="4" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Nueva Contraseña</label>
+                <input type="password" id="auth-reset-password-new" class="auth-form-input" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            
+            <button type="button" id="auth-reset-password-submit" class="auth-form-submit">Actualizar Contraseña</button>
+        </form>
+
+<!-- Signup Form -->
+        <form id="auth-signup-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Crear Cuenta</h2>
+                <p class="auth-modal-subtitle">Crea tu cuenta para compartir tus recuerdos</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Nombre del Alumno</label>
+                <input type="text" id="auth-signup-nombre" class="auth-form-input" placeholder="Tu nombre completo" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Colegio</label>
+                <input type="text" id="auth-signup-colegio" class="auth-form-input" placeholder="Nombre de tu colegio" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-signup-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Contraseña</label>
+                <input type="password" id="auth-signup-password" class="auth-form-input" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            
+            <button type="button" id="auth-signup-submit" class="auth-form-submit">Registrarse</button>
+            
+            <div class="auth-form-link">
+                ¿Ya tienes cuenta? <a id="switch-to-login">Inicia sesión</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+

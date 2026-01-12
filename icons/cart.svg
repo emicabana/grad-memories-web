@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Carrito de compras moderno y limpio -->
+  
+  <!-- Rueda trasera izquierda -->
+  <circle cx="6" cy="20" r="1.5" fill="currentColor" stroke="none"/>
+  
+  <!-- Rueda trasera derecha -->
+  <circle cx="18" cy="20" r="1.5" fill="currentColor" stroke="none"/>
+  
+  <!-- Cuerpo del carrito (la bolsa) -->
+  <path d="M 2.5 4 L 4 10 C 4.2 11 5 11.5 6 11.5 L 18 11.5 C 19 11.5 19.8 11 20 10 L 21.5 4 Z" 
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Mango del carrito (asa superior) -->
+  <path d="M 6 11.5 Q 12 7 18 11.5" 
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Línea de separación (opcional, para detalle) -->
+  <line x1="4.5" y1="4" x2="3" y2="11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="19.5" y1="4" x2="21" y2="11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

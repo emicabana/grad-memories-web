@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - GradMemories</title>
+
+    <!-- TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- NAVBAR CSS PRO -->
+    <link rel="stylesheet" href="./css/navbar.css">
+
+    <!-- STYLES (principal) -->
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- AOS para animaciones scroll -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+
+<body class="bg-[#0f1221] text-white">
+
+    <!-- NAVBAR ( versión PRO + Tailwind compatible ) -->
+    <header class="navbar">
+        <div class="nav-logo">GradMemories</div>
+
+        <!-- Desktop links -->
+        <nav class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="eventos.html">Eventos</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="contacto.html" class="active">Contacto</a>
+        </nav>
+
+        <!-- Acciones (login + carrito) -->
+        <div class="nav-actions">
+            <button class="btn-login">Iniciar sesión</button>
+            <button class="btn-cart" aria-label="Carrito de compras">
+                <img src="icons/cart.svg" alt="Carrito">
+                <span class="cart-count" aria-hidden="true">0</span>
+            </button>
+        </div>
+
+        <!-- Hamburguesa -->
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- MENÚ MÓVIL -->
+    <nav class="mobile-menu">
+        <div class="mobile-actions">
+            <a href="#" class="btn-login">Iniciar sesión</a>
+            <a href="#" class="btn-cart"><img src="icons/cart.svg" alt="Carrito"></a>
+        </div>
+
+        <a href="index.html">Inicio</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html" class="active">Contacto</a>
+    </nav>
+
+    <!-- CONTACTO HERO -->
+    <section class="px-16 py-32 text-center">
+
+        <h1 class="text-4xl font-bold text-purple-300 mb-6" data-aos="fade-up">
+            Contacto
+        </h1>
+
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+            ¿Tienes preguntas? Estamos aquí para ayudarte
+        </p>
+
+    </section>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <section class="px-16 py-20">
+
+        <div class="grid grid-cols-2 gap-16 max-w-6xl mx-auto">
+
+            <!-- INFORMACIÓN DE CONTACTO (izquierda) -->
+            <div data-aos="fade-right">
+
+                <h2 class="text-2xl font-bold text-white mb-4">Información de Contacto</h2>
+
+                <p class="text-gray-400 mb-10">
+                    Estamos disponibles para responder todas tus consultas sobre eventos, servicios y cualquier duda que tengas.
+                </p>
+
+                <!-- Dirección -->
+                <div class="bg-[#161a30] p-6 rounded-xl border border-gray-800 mb-6">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <div class="flex items-center justify-center h-10 w-10 rounded-md bg-purple-500 bg-opacity-20">
+                                <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Dirección</h3>
+                            <p class="text-gray-400 mt-1">Av. Corrientes 1234</p>
+                            <p class="text-gray-400">C1043 CABA, Buenos Aires</p>
+                            <p class="text-gray-400">Argentina</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="bg-[#161a30] p-6 rounded-xl border border-gray-800 mb-6">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <div class="flex items-center justify-center h-10 w-10 rounded-md bg-purple-500 bg-opacity-20">
+                                <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Email</h3>
+                            <a href="mailto:contacto@gradmemories.com" class="text-purple-400 hover:text-purple-300 transition mt-1">contacto@gradmemories.com</a>
+                            <p class="text-gray-500 text-sm mt-1">Respuesta en menos de 24 horas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teléfono -->
+                <div class="bg-[#161a30] p-6 rounded-xl border border-gray-800 mb-6">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <div class="flex items-center justify-center h-10 w-10 rounded-md bg-purple-500 bg-opacity-20">
+                                <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 00.948.684l1.498 4.493a1 1 0 00.502.756l2.048 1.029a2.42 2.42 0 010 4.316l-2.048 1.029a1 1 0 00-.502.756l-1.498 4.493a1 1 0 00-.948.684H5a2 2 0 01-2-2V5z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Teléfono</h3>
+                            <a href="tel:+5411234567" class="text-purple-400 hover:text-purple-300 transition mt-1">+54 11 1234-5678</a>
+                            <p class="text-gray-500 text-sm mt-1">Línea directa de atención al cliente</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Horario de Atención -->
+                <div class="bg-[#161a30] p-6 rounded-xl border border-gray-800">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <div class="flex items-center justify-center h-10 w-10 rounded-md bg-purple-500 bg-opacity-20">
+                                <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Horario de Atención</h3>
+                            <p class="text-gray-400 mt-1">Lunes a Viernes: 9:00 - 18:00</p>
+                            <p class="text-gray-400">Sábados: 10:00 - 14:00</p>
+                            <p class="text-gray-500 text-sm mt-1">Domingos y feriados: Cerrado</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FORMULARIO (derecha) -->
+            <div data-aos="fade-left">
+
+                <div class="bg-[#161a30] p-8 rounded-xl border border-gray-800">
+
+                    <h2 class="text-2xl font-bold text-white mb-8">Envíaños un mensaje</h2>
+
+                    <form id="contact-form" class="space-y-5">
+
+                        <!-- Nombre -->
+                        <div>
+                            <label for="name" class="block text-sm font-semibold text-white mb-2">
+                                Nombre <span class="text-red-400">*</span>
+                            </label>
+                            <input type="text" id="name" name="name" placeholder="Tu nombre completo" required
+                                class="w-full px-4 py-3 bg-[#0f1221] text-white rounded-lg border border-gray-700 placeholder-gray-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-white mb-2">
+                                Email <span class="text-red-400">*</span>
+                            </label>
+                            <input type="email" id="email" name="email" placeholder="tu@email.com" required
+                                class="w-full px-4 py-3 bg-[#0f1221] text-white rounded-lg border border-gray-700 placeholder-gray-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition">
+                        </div>
+
+                        <!-- Asunto -->
+                        <div>
+                            <label for="subject" class="block text-sm font-semibold text-white mb-2">
+                                Asunto
+                            </label>
+                            <input type="text" id="subject" name="subject" placeholder="Asunto de tu consulta" 
+                                class="w-full px-4 py-3 bg-[#0f1221] text-white rounded-lg border border-gray-700 placeholder-gray-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition">
+                        </div>
+
+                        <!-- Mensaje -->
+                        <div>
+                            <label for="message" class="block text-sm font-semibold text-white mb-2">
+                                Mensaje <span class="text-red-400">*</span>
+                            </label>
+                            <textarea id="message" name="message" rows="6" placeholder="Escribe tu mensaje aquí..." required
+                                class="w-full px-4 py-3 bg-[#0f1221] text-white rounded-lg border border-gray-700 placeholder-gray-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition resize-none"></textarea>
+                        </div>
+
+                        <!-- Botón -->
+                        <button type="submit" class="btn-glow w-full px-6 py-3 rounded-lg font-semibold mt-8">
+                            Enviar Mensaje
+                        </button>
+
+                        <!-- Nota de campos requeridos -->
+                        <p class="text-gray-500 text-xs text-center mt-4">* Campos requeridos</p>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECCIÓN AYUDA URGENTE -->
+    <section class="px-16 py-20 bg-[#0b0d19]">
+
+        <div class="max-w-4xl mx-auto">
+
+            <h2 class="text-2xl font-bold text-white mb-8">¿Necesitas ayuda urgente?</h2>
+
+            <div class="bg-[#161a30] p-8 rounded-xl border border-gray-800" data-aos="fade-up">
+                <p class="text-gray-300 leading-relaxed">
+                    Si bienes un problema técnico o necesitas asistencia inmediata durante un 
+                    evento, llámanos directamente al <span class="text-purple-400 font-semibold">+54 11 1234-5678</span> o envíaños un WhatsApp. 
+                    Nuestro equipo de soporte técnico está disponible 24/7 para ayudarte.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="px-20 py-16 bg-[#0b0d19] text-center" data-aos="fade-up">
+
+        <h3 class="text-lg text-purple-300 mb-5">Información de Contacto</h3>
+
+        <p class="text-gray-300 mb-10">
+            ¿Tienes preguntas? Estamos aquí para ayudarte a preservar tus mejores recuerdos.
+        </p>
+
+        <div class="grid grid-cols-3 text-gray-300 text-lg">
+
+            <div>
+                <h4 class="font-semibold text-white">Email</h4>
+                contacto@gradmemories.com
+            </div>
+
+            <div>
+                <h4 class="font-semibold text-white">Teléfono</h4>
+                +54 9 502-9031
+            </div>
+
+            <div>
+                <h4 class="font-semibold text-white">Horario</h4>
+                Lun - Vie: 9:00 - 18:00
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- SIDEBAR CARRITO -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-sidebar-header">
+            <h2>Tu Carrito</h2>
+            <button class="close-sidebar" aria-label="Cerrar carrito">✕</button>
+        </div>
+        <div class="cart-sidebar-content" id="cart-sidebar-content">
+            <div class="cart-empty-msg">Tu carrito está vacío</div>
+        </div>
+        <div class="cart-sidebar-footer">
+            <div class="sidebar-total">Total: <span id="sidebar-total">$0</span></div>
+            <a href="carrito.html" class="btn-glow px-4 py-2 rounded text-center">Ir al Carrito</a>
+        </div>
+    </div>
+
+    <!-- OVERLAY (para cerrar sidebar al hacer clic afuera) -->
+    <div class="cart-sidebar-overlay" id="cart-sidebar-overlay"></div>
+
+        <!-- AUTH SCRIPT -->
+    <script src="./js/auth.js"></script>
+    <!-- NAVBAR SCRIPT -->
+    <script src="./js/navbar.js"></script>
+
+    <!-- AOS SCRIPT -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>AOS.init({ duration: 900, once: true });</script>
+
+    <!-- CONTACTO FORM SCRIPT -->
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // Validar campos requeridos
+            if (!name || !email || !message) {
+                alert('Por favor completa todos los campos requeridos.');
+                return;
+            }
+
+            // Validar email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Por favor ingresa un email válido.');
+                return;
+            }
+
+            // Simular envío (en producción, esto se conectaría a un backend)
+            console.log('Formulario enviado:', { name, email, subject, message });
+            alert('¡Gracias por tu mensaje! Nos pondremos en contacto pronto.');
+            
+            // Limpiar formulario
+            this.reset();
+        });
+    </script>
+
+
+    <!-- AUTH MODAL (LOGIN / SIGNUP) -->
+    <div class="auth-modal-overlay" id="auth-modal-overlay"></div>
+    <div class="auth-modal" id="auth-modal">
+        <!-- Login Form -->
+        <form id="auth-login-form" style="display: block;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Iniciar Sesión</h2>
+                <p class="auth-modal-subtitle">Accede a tu cuenta para comprar</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-login-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Contraseña</label>
+                <input type="password" id="auth-login-password" class="auth-form-input" placeholder="" required>
+            </div>
+            
+            <button type="button" id="auth-login-submit" class="auth-form-submit">Iniciar Sesión</button>
+            
+            <div class="auth-form-link">
+                ¿No tienes cuenta? <a id="switch-to-signup">Regístrate</a><br>
+                <a id="switch-to-forgot">¿Olvidaste tu contraseña?</a>
+            </div>
+        </form>
+
+        <!-- Verify Email Form -->
+        <form id="auth-verify-email-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Verificar Email</h2>
+                <p class="auth-modal-subtitle">Se envió un código a tu email</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Código de Verificación</label>
+                <input type="text" id="auth-verify-email-code" class="auth-form-input" placeholder="0000" maxlength="4" required>
+                <p style="font-size:0.85rem; color:#718096; margin-top:8px; text-align:center;">El código expira en 10 minutos</p>
+            </div>
+            
+            <button type="button" id="auth-verify-email-submit" class="auth-form-submit">Verificar</button>
+            
+            <div class="auth-form-link">
+                ¿No recibiste el código? <a id="resend-verification-code">Reenviar</a>
+            </div>
+        </form>
+
+        <!-- Forgot Password Form -->
+        <form id="auth-forgot-password-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Recuperar Contraseña</h2>
+                <p class="auth-modal-subtitle">Ingresa tu email para recibir un código</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-forgot-password-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <button type="button" id="auth-forgot-password-submit" class="auth-form-submit">Enviar Código</button>
+            
+            <div class="auth-form-link">
+                <a id="forgot-back-to-login"> Volver a iniciar sesión</a>
+            </div>
+        </form>
+
+        <!-- Reset Password Form -->
+        <form id="auth-reset-password-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Nueva Contraseña</h2>
+                <p class="auth-modal-subtitle">Ingresa el código y tu nueva contraseña</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Código de Recuperación</label>
+                <input type="text" id="auth-reset-password-code" class="auth-form-input" placeholder="0000" maxlength="4" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Nueva Contraseña</label>
+                <input type="password" id="auth-reset-password-new" class="auth-form-input" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            
+            <button type="button" id="auth-reset-password-submit" class="auth-form-submit">Actualizar Contraseña</button>
+        </form>
+
+<!-- Signup Form -->
+        <form id="auth-signup-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Crear Cuenta</h2>
+                <p class="auth-modal-subtitle">Crea tu cuenta para compartir tus recuerdos</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Nombre del Alumno</label>
+                <input type="text" id="auth-signup-nombre" class="auth-form-input" placeholder="Tu nombre completo" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Colegio</label>
+                <input type="text" id="auth-signup-colegio" class="auth-form-input" placeholder="Nombre de tu colegio" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-signup-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Contraseña</label>
+                <input type="password" id="auth-signup-password" class="auth-form-input" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            
+            <button type="button" id="auth-signup-submit" class="auth-form-submit">Registrarse</button>
+            
+            <div class="auth-form-link">
+                ¿Ya tienes cuenta? <a id="switch-to-login">Inicia sesión</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+
+
+
+

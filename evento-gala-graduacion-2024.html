@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gala de Graduación 2024 — GradMemories</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="bg-[#0f1221] text-white">
+    <header class="navbar">
+        <div class="nav-logo">GradMemories</div>
+        <nav class="nav-links"><a href="index.html">Inicio</a><a href="eventos.html">Eventos</a><a href="nosotros.html">Nosotros</a><a href="contacto.html">Contacto</a></nav>
+            <div class="nav-actions"><button class="btn-login">Iniciar sesión</button><button class="btn-cart" aria-label="Carrito"><img src="icons/cart.svg" alt="Carrito"><span class="cart-count" aria-hidden="true">0</span></button></div>
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </header>
+
+    <main class="px-16 py-12 max-w-6xl mx-auto">
+        <a href="eventos.html" class="text-gray-400 mb-6 inline-block">← Volver a Eventos</a>
+        <h1 class="text-2xl text-purple-300 font-semibold mb-2">Gala de Graduación 2024</h1>
+        <p class="text-lg text-gray-300 mb-4">Instituto San Martín - 10 de Diciembre, 2024</p>
+
+        <div class="flex items-center gap-6 mb-6">
+            <div class="text-gray-400"><strong class="text-white">6</strong> Fotos</div>
+            <div class="text-gray-400"><strong class="text-white">2</strong> Videos</div>
+        </div>
+
+        <div class="flex gap-6 items-start mb-6">
+            <input id="media-search" placeholder="Buscar por código (ej: EVT001-IMG001)" class="flex-1 px-4 py-3 rounded-lg bg-[#161a30] border border-gray-700 placeholder-gray-500 focus:outline-none">
+            <button id="add-cart-btn" class="btn-glow">Agregar al Carrito (0) - $0</button>
+        </div>
+
+        <div class="bg-[#161a30] p-4 rounded-md border border-gray-700 text-gray-300 mb-6">Precios: <strong class="text-white">Fotos: $500 c/u</strong> &nbsp; Videos: <strong class="text-white">$1000 c/u</strong></div>
+
+        <div id="gallery" class="grid grid-cols-4 gap-6">
+            <div class="media-card" data-id="1" data-type="foto" data-price="500">
+                <div class="relative rounded-lg overflow-hidden" style="height:200px;"><img src="assets/ultimos eventos/evento2.jpg" class="w-full h-full object-cover"><div class="absolute left-3 top-3 bg-black bg-opacity-60 text-xs px-2 py-1 rounded-md">1-IMG001</div><div class="select-badge absolute inset-0 flex items-center justify-center pointer-events-none"></div></div>
+                <div class="p-4 bg-[#161a30] border-t border-gray-800 rounded-b-lg"><div class="text-sm text-gray-400">Foto</div><div class="text-sm text-gray-400">María González</div><div class="flex justify-between items-center mt-3"><div class="text-purple-300 font-semibold">$500</div><button class="select-btn btn-outline px-3 py-1 rounded">Seleccionar</button></div></div>
+            </div>
+
+            <div class="media-card" data-id="2" data-type="video" data-price="1000">
+                <div class="relative rounded-lg overflow-hidden bg-gray-800" style="height:200px;"><div class="w-full h-full flex items-center justify-center text-gray-500"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14v-4z"></path></svg></div><div class="absolute left-3 top-3 bg-black bg-opacity-60 text-xs px-2 py-1 rounded-md">1-VID001</div><div class="select-badge absolute inset-0 flex items-center justify-center pointer-events-none"></div></div>
+                <div class="p-4 bg-[#161a30] border-t border-gray-800 rounded-b-lg"><div class="text-sm text-gray-400">Video</div><div class="text-sm text-gray-400">María González</div><div class="flex justify-between items-center mt-3"><div class="text-purple-300 font-semibold">$1000</div><button class="select-btn btn-outline px-3 py-1 rounded">Seleccionar</button></div></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="./js/navbar.js"></script>
+    <script>
+        (function(){
+            const STORAGE_KEY = 'gradmemories_cart';
+            const gallery = document.getElementById('gallery');
+            const addCartBtn = document.getElementById('add-cart-btn');
+            let cart = [];
+
+            function loadCart(){ try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : []; } catch(e){ return []; } }
+            function saveCart(){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); try{ window.dispatchEvent(new Event('cart-updated')); }catch(e){} } catch(e){} }
+            function updateCartButton(){ const total = cart.reduce((s,i)=>s+Number(i.price),0); addCartBtn.textContent = `Agregar al Carrito (${cart.length}) - $${total}`; }
+            function markCardSelected(card){ card.classList.add('selected'); const badge = card.querySelector('.select-badge'); if(badge) badge.innerHTML = '<div class="bg-purple-500 rounded-full w-10 h-10 flex items-center justify-center text-white">✓</div>'; const btn = card.querySelector('.select-btn'); if(btn) btn.textContent = 'Quitar'; }
+            function unmarkCard(card){ card.classList.remove('selected'); const badge = card.querySelector('.select-badge'); if(badge) badge.innerHTML = ''; const btn = card.querySelector('.select-btn'); if(btn) btn.textContent = 'Seleccionar'; }
+            function syncUIFromCart(){ document.querySelectorAll('.media-card').forEach(card=>{ const id = card.dataset.id; const found = cart.find(x=>x.id===id); if(found) markCardSelected(card); else unmarkCard(card); }); updateCartButton(); }
+
+            cart = loadCart();
+            syncUIFromCart();
+
+            gallery.addEventListener('click', (e)=>{
+                const btn = e.target.closest('.select-btn');
+                if(!btn) return;
+                
+                // Verificar login antes de seleccionar
+                if(!requireLogin()) return;
+                
+                const card = btn.closest('.media-card');
+                const id = card.dataset.id;
+                const price = card.dataset.price;
+                const idx = cart.findIndex(x=>x.id===id);
+                if(idx>=0){
+                    cart.splice(idx,1);
+                    unmarkCard(card);
+                } else {
+                    const imgEl = card.querySelector('img');
+                    const thumbnail = imgEl ? imgEl.getAttribute('src') : '';
+                    const pageTitle = document.querySelector('h1') ? document.querySelector('h1').textContent.trim() : document.title;
+                    const title = `${pageTitle} — ${id}`;
+                    const type = card.dataset.type || '';
+                    cart.push({id, price, title, thumbnail, type});
+                    markCardSelected(card);
+                }
+                saveCart();
+                updateCartButton();
+            });
+
+            addCartBtn.addEventListener('click', ()=>{
+                if(cart.length===0){ alert('Selecciona al menos un item.'); return; }
+                alert(`Carrito guardado (${cart.length} items). Total: $${cart.reduce((s,i)=>s+Number(i.price),0)}`);
+            });
+        })();
+    </script>
+
+
+    <!-- SIDEBAR CARRITO -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-sidebar-header">
+            <h2>Tu Carrito</h2>
+            <button class="close-sidebar" aria-label="Cerrar carrito">✕</button>
+        </div>
+        <div class="cart-sidebar-content" id="cart-sidebar-content">
+            <div class="cart-empty-msg">Tu carrito está vacío</div>
+        </div>
+        <div class="cart-sidebar-footer">
+            <div class="sidebar-total">Total: <span id="sidebar-total">$0</span></div>
+            <a href="carrito.html" class="btn-glow px-4 py-2 rounded text-center">Ir al Carrito</a>
+        </div>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="cart-sidebar-overlay" id="cart-sidebar-overlay"></div>
+
+        <!-- AUTH SCRIPT -->
+    <script src="./js/auth.js"></script>
+    <!-- NAVBAR SCRIPT -->
+    <script src="./js/navbar.js"></script>
+
+    <!-- AUTH MODAL (LOGIN / SIGNUP) -->
+    <div class="auth-modal-overlay" id="auth-modal-overlay"></div>
+    <div class="auth-modal" id="auth-modal">
+        <!-- Login Form -->
+        <form id="auth-login-form" style="display: block;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Iniciar Sesión</h2>
+                <p class="auth-modal-subtitle">Accede a tu cuenta para comprar</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-login-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Contraseña</label>
+                <input type="password" id="auth-login-password" class="auth-form-input" placeholder="" required>
+            </div>
+            
+            <button type="button" id="auth-login-submit" class="auth-form-submit">Iniciar Sesión</button>
+            
+            <div class="auth-form-link">
+                ¿No tienes cuenta? <a id="switch-to-signup">Regístrate</a><br>
+                <a id="switch-to-forgot">¿Olvidaste tu contraseña?</a>
+            </div>
+        </form>
+
+        <!-- Verify Email Form -->
+        <form id="auth-verify-email-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Verificar Email</h2>
+                <p class="auth-modal-subtitle">Se envió un código a tu email</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Código de Verificación</label>
+                <input type="text" id="auth-verify-email-code" class="auth-form-input" placeholder="0000" maxlength="4" required>
+                <p style="font-size:0.85rem; color:#718096; margin-top:8px; text-align:center;">El código expira en 10 minutos</p>
+            </div>
+            
+            <button type="button" id="auth-verify-email-submit" class="auth-form-submit">Verificar</button>
+            
+            <div class="auth-form-link">
+                ¿No recibiste el código? <a id="resend-verification-code">Reenviar</a>
+            </div>
+        </form>
+
+        <!-- Forgot Password Form -->
+        <form id="auth-forgot-password-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Recuperar Contraseña</h2>
+                <p class="auth-modal-subtitle">Ingresa tu email para recibir un código</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-forgot-password-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <button type="button" id="auth-forgot-password-submit" class="auth-form-submit">Enviar Código</button>
+            
+            <div class="auth-form-link">
+                <a id="forgot-back-to-login"> Volver a iniciar sesión</a>
+            </div>
+        </form>
+
+        <!-- Reset Password Form -->
+        <form id="auth-reset-password-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Nueva Contraseña</h2>
+                <p class="auth-modal-subtitle">Ingresa el código y tu nueva contraseña</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Código de Recuperación</label>
+                <input type="text" id="auth-reset-password-code" class="auth-form-input" placeholder="0000" maxlength="4" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Nueva Contraseña</label>
+                <input type="password" id="auth-reset-password-new" class="auth-form-input" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            
+            <button type="button" id="auth-reset-password-submit" class="auth-form-submit">Actualizar Contraseña</button>
+        </form>
+
+<!-- Signup Form -->
+        <form id="auth-signup-form" style="display: none;">
+            <div class="auth-modal-header">
+                <h2 class="auth-modal-title">Crear Cuenta</h2>
+                <p class="auth-modal-subtitle">Crea tu cuenta para compartir tus recuerdos</p>
+                <button type="button" class="auth-modal-close"></button>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Nombre del Alumno</label>
+                <input type="text" id="auth-signup-nombre" class="auth-form-input" placeholder="Tu nombre completo" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Colegio</label>
+                <input type="text" id="auth-signup-colegio" class="auth-form-input" placeholder="Nombre de tu colegio" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Email</label>
+                <input type="email" id="auth-signup-email" class="auth-form-input" placeholder="tu@email.com" required>
+            </div>
+            
+            <div class="auth-form-group">
+                <label class="auth-form-label">Contraseña</label>
+                <input type="password" id="auth-signup-password" class="auth-form-input" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            
+            <button type="button" id="auth-signup-submit" class="auth-form-submit">Registrarse</button>
+            
+            <div class="auth-form-link">
+                ¿Ya tienes cuenta? <a id="switch-to-login">Inicia sesión</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+
+

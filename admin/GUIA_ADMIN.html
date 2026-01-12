@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Rápida - Panel Administrador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0f1221;
+            color: white;
+        }
+        .container {
+            background: #161a30;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 30px;
+        }
+        h1 {
+            color: #a78bfa;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+        h2 {
+            color: #667eea;
+            margin-top: 30px;
+        }
+        .step {
+            background: #0f1221;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .code {
+            background: #1f2937;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            color: #4ade80;
+            margin: 10px 0;
+        }
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+        .button:hover {
+            text-decoration: underline;
+        }
+        .credentials {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid #22c55e;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .warning {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid #dc2626;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #fca5a5;
+        }
+        ul {
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Panel Administrador GradMemories</h1>
+        
+        <p>Bienvenido al panel de administración. Este documento te guiará sobre cómo acceder y usar el sistema.</p>
+
+        <div class="credentials">
+            <strong>🔑 Credenciales de Acceso</strong><br>
+            Contraseña: <code style="background: #1f2937; padding: 2px 6px; border-radius: 3px;">admin123</code>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ IMPORTANTE</strong><br>
+            Este es un sistema de prototipo. Los datos se guardan en localStorage del navegador y se pierden si se borra el historial.
+        </div>
+
+        <h2>1. Acceder al Panel</h2>
+        <div class="step">
+            <p>Abre el archivo <code>admin.html</code> en tu navegador</p>
+            <a href="./admin.html" class="button">Ir al Panel Administrador</a>
+        </div>
+
+        <h2>2. Iniciar Sesión</h2>
+        <div class="step">
+            <ol>
+                <li>Verás un modal pidiendo la contraseña</li>
+                <li>Ingresa: <code>admin123</code></li>
+                <li>Haz click en "Acceder"</li>
+                <li>Si es correcto, entrarás al dashboard</li>
+            </ol>
+        </div>
+
+        <h2>3. Secciones del Panel</h2>
+        
+        <h3>📊 Dashboard</h3>
+        <div class="step">
+            <ul>
+                <li><strong>Total de Eventos:</strong> Cantidad de eventos registrados</li>
+                <li><strong>Total de Fotos:</strong> Cantidad de fotos subidas</li>
+                <li><strong>Total de Videos:</strong> Cantidad de videos subidos</li>
+                <li><strong>Ingresos Potenciales:</strong> Suma de precios de todos los medios</li>
+            </ul>
+            <p>También lista todos los eventos con sus medios asociados.</p>
+        </div>
+
+        <h3>📁 Subir Media</h3>
+        <div class="step">
+            <p><strong>Pasos para subir una foto o video:</strong></p>
+            <ol>
+                <li>Selecciona un evento del dropdown</li>
+                <li>Elige el tipo: "Foto ($500)" o "Video ($1000)"</li>
+                <li>Ingresa el nombre del fotógrafo/videógrafo</li>
+                <li>Haz click en "Arrastra o haz click para seleccionar archivo"</li>
+                <li>Selecciona una foto o video de tu computadora</li>
+                <li>Haz click en "Subir Media"</li>
+            </ol>
+            <p><strong>Resultado:</strong> El archivo se carga en localStorage y se asigna un código único.</p>
+        </div>
+
+        <h3>📷 Gestionar Medios</h3>
+        <div class="step">
+            <p>Panel para ver todos los medios subidos:</p>
+            <ul>
+                <li><strong>Filtrar:</strong> Selecciona un evento para ver solo sus medios</li>
+                <li><strong>Ver Previsualizaciones:</strong> Ves imágenes de las fotos</li>
+                <li><strong>Copiar ID:</strong> Botón para copiar el código único al portapapeles</li>
+                <li><strong>Eliminar:</strong> Botón rojo para eliminar un media</li>
+            </ul>
+        </div>
+
+        <h3>🎉 Gestionar Eventos</h3>
+        <div class="step">
+            <p><strong>Crear Nuevo Evento:</strong></p>
+            <ul>
+                <li>Nombre (obligatorio)</li>
+                <li>Fecha (obligatorio)</li>
+                <li>Institución (obligatorio)</li>
+                <li>Descripción (opcional)</li>
+            </ul>
+            <p><strong>Eliminar Evento:</strong></p>
+            <ul>
+                <li>Haz click en el botón "Eliminar" de un evento existente</li>
+                <li>Se eliminan el evento y TODOS sus medios asociados</li>
+            </ul>
+        </div>
+
+        <h2>4. Flujo de Trabajo Recomendado</h2>
+        <div class="step">
+            <strong>Día 1: Crear eventos</strong>
+            <ul>
+                <li>Accede al panel</li>
+                <li>Ve a "Gestionar Eventos"</li>
+                <li>Crea los eventos del año</li>
+            </ul>
+
+            <strong style="display: block; margin-top: 15px;">Día 2-7: Subir medios</strong>
+            <ul>
+                <li>Ve a "Subir Media"</li>
+                <li>Para cada foto/video: selecciona evento, tipo, fotógrafo y archivo</li>
+                <li>Haz click en "Subir Media"</li>
+                <li>Verifica en el Dashboard</li>
+            </ul>
+
+            <strong style="display: block; margin-top: 15px;">Día 8: Revisar y publicar</strong>
+            <ul>
+                <li>Ve a "Gestionar Medios"</li>
+                <li>Verifica que todos los medios estén cargados</li>
+                <li>Elimina cualquier media incorrecta</li>
+                <li>El sitio público está listo para que los usuarios compren</li>
+            </ul>
+        </div>
+
+        <h2>5. Información Técnica</h2>
+        <div class="step">
+            <p><strong>¿Dónde se guardan los datos?</strong></p>
+            <p>En <code>localStorage</code> del navegador bajo estas claves:</p>
+            <ul>
+                <li><code>gradmemories_admin_auth</code> - Estado de login</li>
+                <li><code>gradmemories_events</code> - Lista de eventos</li>
+                <li><code>gradmemories_media</code> - Lista de fotos/videos</li>
+            </ul>
+
+            <p style="margin-top: 15px;"><strong>¿Cómo veo los datos?</strong></p>
+            <ol>
+                <li>Abre DevTools (F12 o Ctrl+Shift+I)</li>
+                <li>Ve a la pestaña "Application"</li>
+                <li>En el lado izquierdo, selecciona "Local Storage"</li>
+                <li>Verás las tres claves con los datos JSON</li>
+            </ol>
+        </div>
+
+        <h2>6. Cambiar Contraseña</h2>
+        <div class="step">
+            <p><strong>Para cambiar la contraseña:</strong></p>
+            <ol>
+                <li>Abre el archivo <code>js/admin.js</code> en un editor</li>
+                <li>Busca la línea: <code>const ADMIN_PASSWORD = 'admin123';</code></li>
+                <li>Cambia <code>'admin123'</code> por la nueva contraseña</li>
+                <li>Guarda el archivo</li>
+            </ol>
+            <p>Ejemplo: <code>const ADMIN_PASSWORD = 'MiPassword2024';</code></p>
+        </div>
+
+        <h2>7. Preguntas Frecuentes</h2>
+        <div class="step">
+            <p><strong>¿Qué pasa si cierro el navegador?</strong></p>
+            <p>Los datos se mantienen en localStorage. La próxima vez que abras el navegador, los datos estarán allí.</p>
+
+            <p style="margin-top: 15px;"><strong>¿Qué pasa si borro el historial?</strong></p>
+            <p>Si seleccionas "Limpiar datos del navegador" y incluyes localStorage, se perderán todos los datos.</p>
+
+            <p style="margin-top: 15px;"><strong>¿Puedo subir archivos grandes?</strong></p>
+            <p>Sí, pero localStorage tiene un límite de ~5-10MB. Para archivos muy grandes, redimensiona las imágenes o comprime los videos antes de subir.</p>
+
+            <p style="margin-top: 15px;"><strong>¿Cómo acceden los usuarios a los medios?</strong></p>
+            <p>Los usuarios ven los medios en las páginas de eventos públicas:</p>
+            <ul>
+                <li>evento-baile-egresados-2024.html</li>
+                <li>evento-gala-graduacion-2024.html</li>
+                <li>evento-fiesta-egresados-2024.html</li>
+            </ul>
+        </div>
+
+        <h2>8. Recursos</h2>
+        <div class="step">
+            <ul>
+                <li><a href="./admin.html" style="color: #667eea; text-decoration: underline;">📊 Ir al Panel Administrador</a></li>
+                <li><a href="./ADMIN_PANEL.md" style="color: #667eea; text-decoration: underline;">📖 Documentación Completa</a></li>
+                <li><a href="../index.html" style="color: #667eea; text-decoration: underline;">🏠 Volver a Inicio</a></li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #374151; text-align: center; color: #9ca3af; font-size: 0.9rem;">
+            <p>GradMemories Admin Panel v1.0</p>
+            <p>Sistema de Gestión de Eventos y Medios</p>
+        </div>
+    </div>
+</body>
+</html>
