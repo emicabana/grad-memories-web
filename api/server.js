@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 const app = express();
@@ -22,6 +23,14 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(fileUpload());
+
+// Serve frontend static files from project root (ignore dotfiles like .env)
+const publicRoot = path.join(__dirname, '..');
+app.use(express.static(publicRoot, { dotfiles: 'ignore' }));
+
+// Root route serves index.html
+app.get('/', (req, res) => res.sendFile(path.join(publicRoot, 'index.html')));
 
 // Routes
 const authRoutes = require('./routes/auth');

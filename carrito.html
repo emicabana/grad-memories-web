@@ -98,25 +98,195 @@
             clearBtn.addEventListener('click', ()=>{ if(!confirm('Vaciar carrito?')) return; saveCart([]); render(); updateNavbarCounter(); });
 
             checkoutBtn.addEventListener('click', async ()=>{
-                if(!requireLogin()) return; // Verificar login
-                const cart = loadCart(); if(cart.length===0){ alert('Carrito vacío'); return; }
-                // Enviar al backend (ejemplo POST)
-                try{
-                    const resp = await fetch('/api/checkout', {
-                        method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({items: cart})
-                    });
-                    if(resp.ok){
-                        const data = await resp.json();
-                        alert('Pago simulado OK — orden: ' + (data.orderId || 'N/A'));
-                        // limpiar carrito
-                        saveCart([]); render(); updateNavbarCounter();
-                    } else {
-                        alert('Error en el pago (simulado).');
-                    }
-                } catch(err){
-                    alert('No se pudo contactar el servidor de pago. (Simulación)');
+                if(!requireLogin()){
+                    const cont = confirm('No estás logueado. ¿Continuar como invitado y pagar?');
+                    if(!cont) return;
                 }
+                const cart = loadCart(); if(cart.length===0){ alert('Carrito vacío'); return; }
+                // Mostrar modal de selección de método de pago
+                showPaymentMethodModal(cart);
             });
+
+            // Modal de selección de método de pago
+            function showPaymentMethodModal(cart){
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                modal.innerHTML = `
+                    <div class="bg-[#161a30] p-8 rounded-xl border border-purple-500 max-w-md w-full mx-4">
+                        <h2 class="text-2xl font-bold text-purple-300 mb-6">Selecciona Método de Pago</h2>
+                        
+                        <button id="mp-option" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg mb-4 transition">
+                            💳 Mercado Pago
+                        </button>
+                        
+                        <button id="transfer-option" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                            🏦 Transferencia Bancaria
+                        </button>
+                        
+                        <button id="close-payment-modal" class="w-full mt-4 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                            ✕ Cancelar
+                        </button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                document.getElementById('mp-option').addEventListener('click', () => {
+                    modal.remove();
+                    proceedMercadoPagoCheckout(cart);
+                });
+                
+                document.getElementById('transfer-option').addEventListener('click', () => {
+                    modal.remove();
+                    proceedTransferenceCheckout(cart);
+                });
+                
+                document.getElementById('close-payment-modal').addEventListener('click', () => {
+                    modal.remove();
+                });
+            }
+
+            // Procesar pago con Mercado Pago
+            async function proceedMercadoPagoCheckout(cart){
+                try{
+                    const payloadItems = cart.map(i=>({ assetId: i.id || i.assetId, title: i.title || i.filename, price: Number(i.price||0), qty: Number(i.qty||1) }));
+                    const apiBase = (window.location && window.location.origin) ? window.location.origin : 'http://localhost:3000';
+                    const url = apiBase + '/api/payments/create_preference_public';
+                    console.log('Creating MP preference, POST', url, payloadItems);
+                    const resp = await fetch(url, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ items: payloadItems }) });
+                    let data;
+                    try{ data = await resp.json(); }catch(e){ console.error('Invalid JSON response', e); data = null; }
+                    console.log('create pref response', resp.status, data);
+                    if(resp.ok && data){
+                        const init = data.init_point || (data.preference && (data.preference.init_point || data.preference.sandbox_init_point));
+                        if(init){ window.location.href = init; return; }
+                        alert('Preferencia creada pero no devolvió init_point. Revisa logs.');
+                    } else {
+                        alert('No se pudo crear la preferencia de pago. Revisa la consola y logs del servidor.');
+                    }
+                }catch(err){ console.error(err); alert('Error al contactar el servidor de pagos.'); }
+            }
+
+            // Procesar pago por transferencia
+            async function proceedTransferenceCheckout(cart){
+                try{
+                    const payloadItems = cart.map(i=>({ assetId: i.id || i.assetId, id: i.id || i.assetId, price: Number(i.price||0) }));
+                    const apiBase = window.location.origin || 'http://localhost:3000';
+                    const resp = await fetch(apiBase + '/api/payments/create_transference_order', {
+                        method: 'POST',
+                        headers: {'Content-Type':'application/json'},
+                        body: JSON.stringify({ items: payloadItems })
+                    });
+                    
+                    const data = await resp.json();
+                    if(!resp.ok){
+                        alert('Error: ' + (data.error || 'No se pudo procesar'));
+                        return;
+                    }
+
+                    // Mostrar modal de transferencia
+                    showTransferenceModal(data, cart);
+                }catch(err){
+                    console.error(err);
+                    alert('Error procesando la transferencia');
+                }
+            }
+
+            // Modal de datos de transferencia
+            function showTransferenceModal(paymentData, cart){
+                const bankDetails = paymentData.bankDetails;
+                const totalAmount = paymentData.totalAmount;
+                const orderIds = paymentData.orders.map(o => o._id).join(',');
+                
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto';
+                modal.innerHTML = `
+                    <div class="bg-[#161a30] p-8 rounded-xl border border-green-500 max-w-2xl w-full mx-4 my-8">
+                        <h2 class="text-2xl font-bold text-green-300 mb-6">Datos para Transferencia Bancaria</h2>
+                        
+                        <div class="bg-[#0f1221] p-4 rounded-lg mb-6 space-y-3">
+                            <p><span class="text-gray-400">Banco:</span> <strong>${bankDetails.bankName}</strong></p>
+                            <p><span class="text-gray-400">Titular:</span> <strong>${bankDetails.accountHolder}</strong></p>
+                            <p><span class="text-gray-400">Tipo de Cuenta:</span> <strong>${bankDetails.accountType}</strong></p>
+                            <p><span class="text-gray-400">Número de Cuenta:</span> <strong>${bankDetails.accountNumber}</strong></p>
+                            <p><span class="text-gray-400">CBU:</span> <strong class="break-all">${bankDetails.cbu}</strong></p>
+                            <p><span class="text-gray-400">CUIT:</span> <strong>${bankDetails.cuit}</strong></p>
+                            <p class="text-lg pt-4 border-t border-gray-700"><span class="text-gray-400">Monto a Transferir:</span> <strong class="text-green-400">$${totalAmount} ARS</strong></p>
+                        </div>
+
+                        <div class="mb-6 p-4 bg-blue-900 bg-opacity-30 rounded-lg">
+                            <p class="text-sm text-blue-200 mb-3">📝 Una vez realizada la transferencia:</p>
+                            <ol class="text-sm text-blue-200 space-y-2 list-decimal list-inside">
+                                <li>Captura el comprobante de transacción</li>
+                                <li>Sube la imagen aquí para verificación</li>
+                                <li>Te enviaremos los archivos por WhatsApp</li>
+                            </ol>
+                        </div>
+
+                        <div id="upload-section" class="mb-6">
+                            <label class="block text-sm text-gray-300 mb-2">Comprobante de Transferencia:</label>
+                            <input type="file" id="proof-file" accept="image/*" class="w-full p-2 bg-[#0f1221] border border-gray-700 rounded-lg text-white">
+                        </div>
+
+                        <div class="flex gap-3">
+                            <button id="submit-proof" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                                ✓ Subir Comprobante
+                            </button>
+                            <button id="whatsapp-contact" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2">
+                                <span>📱 Contactar por WhatsApp</span>
+                            </button>
+                            <button id="close-transfer-modal" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                                ✕ Cerrar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+
+                document.getElementById('submit-proof').addEventListener('click', async () => {
+                    const file = document.getElementById('proof-file').files[0];
+                    if(!file){
+                        alert('Por favor selecciona el comprobante');
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('proof', file);
+                    formData.append('orderId', orderIds.split(',')[0]);
+                    formData.append('reference', 'web_upload');
+
+                    try{
+                        const apiBase = window.location.origin || 'http://localhost:3000';
+                        const resp = await fetch(apiBase + '/api/payments/submit_transference_proof', {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        const result = await resp.json();
+                        if(resp.ok){
+                            alert('✓ Comprobante subido. Te contactaremos pronto por WhatsApp.');
+                            saveCart([]);
+                            render();
+                            updateNavbarCounter();
+                            modal.remove();
+                        } else {
+                            alert('Error: ' + (result.error || 'No se pudo subir'));
+                        }
+                    }catch(err){
+                        console.error(err);
+                        alert('Error subiendo el comprobante');
+                    }
+                });
+
+                document.getElementById('whatsapp-contact').addEventListener('click', () => {
+                    window.open(paymentData.whatsappLink, '_blank');
+                });
+
+                document.getElementById('close-transfer-modal').addEventListener('click', () => {
+                    modal.remove();
+                });
+            }
 
             // init
             render(); updateNavbarCounter();
@@ -268,6 +438,9 @@
             </div>
         </form>
     </div>
+
+    <!-- WHATSAPP BUTTON -->
+    <script src="./js/whatsapp.js"></script>
 </body>
 </html>
 
